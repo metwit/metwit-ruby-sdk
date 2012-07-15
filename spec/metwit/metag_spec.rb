@@ -10,5 +10,14 @@ module Metwit
       metag.weather[:status] = nil
       metag.should_not be_valid
     end
+
+    it "must have a recognized weather status" do
+      metag.weather[:status] = :vola_tutto
+      metag.should_not be_valid
+
+      metag.weather[:status] = :sunny
+      metag.should be_valid
+    end
+    
   end
 end
