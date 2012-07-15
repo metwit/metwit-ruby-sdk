@@ -14,4 +14,5 @@ Gem::Specification.new do |gem|
   gem.name          = "metwit"
   gem.require_paths = ["lib"]
   gem.version       = Metwit::VERSION
+  gem.add_dependency('httparty')
 end
