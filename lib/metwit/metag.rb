@@ -1,21 +1,22 @@
 module Metwit
   # Metags are the weather tags
   class Metag
-    # @!attribute [rw] weather
-    #   @return [{Symbol => String, Hash}] weather data
-    #   Mandatory and guaranteed.  
-    #   Weather is an Hash with two keys: :status and :details  
-    #   Valid :status values are:  
-    #   :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
+
+    # Mandatory and guaranteed.  
+    # Weather is an Hash with two keys: :status and :details  
+    # Valid :status values are:  
+    # :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
+        # @return [{Symbol => String, Hash}] weather data
     attr_accessor :weather
 
-    # Guaranteed.  
+    # Guaranteed.
+    # The metag id
     # @return [String] unique identifier of the metag
     attr_reader :id
 
-    # Guaranteed.  
+    # Guaranteed.
+    # The metag timestamp.
     # @return [Time] when the metag was created
-
     attr_reader :timestamp
       
     def initialize
