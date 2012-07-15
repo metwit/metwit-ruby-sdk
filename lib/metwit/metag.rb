@@ -2,7 +2,7 @@ module Metwit
   # Metags are the weather tags
   class Metag
     # @!attribute [rw] weather
-    #   @return Hash
+    #   @return [Hash] weather data
     #   Is always required in a valid Metag.  
     #   Weather is an Hash with two keys: :status and :details  
     #   Valid :status values are:  
