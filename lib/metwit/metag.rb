@@ -10,11 +10,13 @@ module Metwit
     attr_accessor :weather
 
     # @!attribute [r] id
-    #   @return [String] unique identifier of the metag
+    #   @return String unique identifier of the metag
+    #   Guaranteed.  
     attr_reader :id
 
     # @!attribute [r] timestamp
-    #   @return [Time] when the metag was created
+    #   @return Time when the metag was created
+    #   Guaranteed.  
     attr_reader :timestamp
       
     def initialize
