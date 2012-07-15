@@ -18,9 +18,15 @@ module Metwit
     # The metag timestamp.
     # @return [Time] when the metag was created
     attr_reader :timestamp
+
+    # Mandatory and guaranteed.
+    # The geo location of the metag with GeoJSON format
+    # @return [GeoJSON] geo location of the metag
+    attr_accessor :geo
       
-    def initialize
-      @weather = Hash.new
+    def initialize(options={})
+      @weather = options[:weather]
+      @geo = options[:geo]
     end
 
     # This method validates the metag for the submission
@@ -28,6 +34,7 @@ module Metwit
     def valid?
       return false if @weather[:status].nil?
       return false unless weather_statuses.include?(@weather[:status])
+      return false if @geo.nil?
       true
     end
 
