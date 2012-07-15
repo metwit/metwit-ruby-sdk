@@ -3,12 +3,20 @@ module Metwit
   class Metag
     # @!attribute [rw] weather
     #   @return [{Symbol => String, Hash}] weather data
-    #   Is always required in a valid Metag.  
+    #   Mandatory and guaranteed.  
     #   Weather is an Hash with two keys: :status and :details  
     #   Valid :status values are:  
     #   :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
     attr_accessor :weather
 
+    # @!attribute [r] id
+    #   @return [String] unique identifier of the metag
+    attr_reader :id
+
+    # @!attribute [r] timestamp
+    #   @return [Time] when the metag was created
+    attr_reader :timestamp
+      
     def initialize
       @weather = Hash.new
     end
