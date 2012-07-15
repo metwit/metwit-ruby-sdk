@@ -9,14 +9,13 @@ module Metwit
     #   :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
     attr_accessor :weather
 
-    # @!attribute [r] id
-    #   @return String unique identifier of the metag
-    #   Guaranteed.  
+    # Guaranteed.  
+    # @return [String] unique identifier of the metag
     attr_reader :id
 
-    # @!attribute [r] timestamp
-    #   @return Time when the metag was created
-    #   Guaranteed.  
+    # Guaranteed.  
+    # @return [Time] when the metag was created
+
     attr_reader :timestamp
       
     def initialize
@@ -24,7 +23,7 @@ module Metwit
     end
 
     # This method validates the metag for the submission
-    # @return Boolean
+    # @return [Boolean]
     def valid?
       return false if @weather[:status].nil?
       return false unless weather_statuses.include?(@weather[:status])
@@ -32,7 +31,7 @@ module Metwit
     end
 
     # This method return all the reognized weather statuses
-    # @return Array<Symbol>
+    # @return [Array<Symbol>]
     def weather_statuses
       [:sunny, :rainy, :stormy, :snowy, :partly_cloudy, :cloudy, :hailing, :heavy_seas, :calm_seas, :foggy, :snow_flurries, :windy, :clear_moon, :partly_cloudy]
     end
