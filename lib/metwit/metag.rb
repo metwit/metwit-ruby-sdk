@@ -31,7 +31,6 @@ module Metwit
       @weather = options[:weather]
       @position = options[:position]
     end
-
     # This method validates the metag for the submission
     # @return [Boolean]
     def valid?
