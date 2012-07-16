@@ -1,4 +1,5 @@
 module Metwit
+
   # Metags are the weather tags
   class Metag
 
@@ -6,7 +7,7 @@ module Metwit
     # Weather is an Hash with two keys: :status and :details  
     # Valid :status values are:  
     # :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
-        # @return [{Symbol => String, Hash}] weather data
+    # @return [{Symbol => String, Hash}] weather data
     attr_accessor :weather
 
     # Guaranteed.
@@ -22,11 +23,11 @@ module Metwit
     # Mandatory and guaranteed.
     # The geo location of the metag with GeoJSON format
     # @return [GeoJSON] geo location of the metag
-    attr_accessor :geo
+    attr_accessor :position
       
     def initialize(options={})
       @weather = options[:weather]
-      @geo = options[:geo]
+      @position = options[:position]
     end
 
     # This method validates the metag for the submission
@@ -34,7 +35,7 @@ module Metwit
     def valid?
       return false if @weather[:status].nil?
       return false unless weather_statuses.include?(@weather[:status])
-      return false if @geo.nil?
+      return false if @position.nil?
       true
     end
 

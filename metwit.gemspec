@@ -15,4 +15,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Metwit::VERSION
   gem.add_dependency('httparty')
+  gem.add_dependency('rgeo-geojson')
 end
