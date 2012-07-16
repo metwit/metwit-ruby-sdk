@@ -1,9 +1,14 @@
 require 'spec_helper'
-
 module Metwit
   describe Metag do
     def metag
-      @metag ||= Metag.new(:weather => {:status => :sunny}, :position => 'suca')
+      factory = RGeo::Cartesian.factory
+      
+      options = {
+        :weather => {:status => :sunny},
+        :position => factory.point(1,2),
+      }
+      @metag ||= Metag.new(options)
     end
 
     context "valid metag" do
@@ -27,7 +32,10 @@ module Metwit
         end
 
         it "should be a geographical point" do
-          pending
+          metag.should be_valid
+          gis = RGeo::Cartesian.factory
+          metag.position = gis.line(gis.point(1,2), gis.point(2,1))
+          metag.should_not be_valid
         end
 
         

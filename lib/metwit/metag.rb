@@ -1,3 +1,5 @@
+require 'rgeo'
+
 module Metwit
 
   # Metags are the weather tags
@@ -6,7 +8,7 @@ module Metwit
     # Mandatory and guaranteed.  
     # Weather is an Hash with two keys: :status and :details  
     # Valid :status values are:  
-    # :sunny, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :clear\_moon, :partly\_cloudy
+    # :clear, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :partly\_cloudy, :uknown
     # @return [{Symbol => String, Hash}] weather data
     attr_accessor :weather
 
@@ -36,6 +38,7 @@ module Metwit
       return false if @weather[:status].nil?
       return false unless weather_statuses.include?(@weather[:status])
       return false if @position.nil?
+      return false unless RGeo::Feature::Point.check_type(@position)
       true
     end
 
