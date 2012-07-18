@@ -20,17 +20,17 @@ module Metwit
     describe "::find" do
       
       it "should return a User object" do
-        User.find(3).should be_a User
+        User.find(6576).should be_a User
       end
 
       it "should return a User with the id searched" do
-        id = 3
-        user = User.find(3)
+        id = "6576"
+        user = User.find(id)
         user.id.should eq id
       end
       
       it "should have all the guaranteed fields" do
-        user = User.find(3)
+        user = User.find(6576)
         user.id.should_not be_nil
         user.nickname.should_not be_nil
         user.metags_count.should_not be_nil

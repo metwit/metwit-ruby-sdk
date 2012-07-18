@@ -1,9 +1,12 @@
 require 'uri'
+require 'httparty'
 
 module Metwit
 
   # A user of Metwit
   class User
+    include HTTParty
+    base_uri(BASE_URL+'/users')
 
     # Guaranteed.
     # The user id
@@ -90,22 +93,31 @@ module Metwit
       # Return the user associate with the id
       # @return [User]
       def find(id)
-        options = {
-          id: 3,
-          nickname: 'verginge',
-          metags_count: 100,
-          today_metags_count: 2,
-          avatar: URI('https://s3.salcazzo.amazon.com/di233hane'),
-          is_followed: false,
-          followers_count: 10,
-          following_count: 100,
-          has_facebook: true,
-          has_twitter: false,
-        }
-
-        return User.new(options)
+        response = get("/#{id}/")
+        raise "http error" unless response.code == 200
+        user_from_json(response)
       end
+
+      private
       
+      # Create a user from an HTTParty::Response
+      # @return [User]
+      def user_from_json(response)
+        options = {
+          id: response['id'],
+          nickname: response['nickname'],
+          metags_count: response['reports_count'],
+          today_metags_count: response['todays_reports_count'],
+          avatar: response['avatar_url'],
+          followed: response['followed'],
+          followers_count: response['followers_count'],
+          following_count: response['following_count'],
+          has_facebook: response['has_facebook'],
+          has_twitter: response['has_twitter'],
+        }
+        User.new(options)
+      end
+            
     end
       
   end
