@@ -5,7 +5,7 @@ gemspec
 
 group :development, :test do
   gem 'rspec'
-  gem 'fakeweb'
+  gem 'webmock'
   gem 'yard'
   gem 'redcarpet'
 end
