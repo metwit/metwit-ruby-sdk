@@ -75,17 +75,17 @@ module Metwit
     # @return [String]
     attr_accessor :email
 
-    def initialize(options={})
-      @id = options[:id]
-      @nickname = options[:nickname]
-      @metags_count = options[:metags_count]
-      @today_metags_count = options[:today_metags_count]
-      @avatar = options[:avatar]
-      @is_followed = options[:followed]
-      @followers_count = options[:followers_count]
-      @following_count = options[:following_count]
-      @has_facebook = options[:has_facebook]
-      @has_twitter = options[:has_twitter]
+    def initialize(args={})
+      @id = args[:id]
+      @nickname = args[:nickname]
+      @metags_count = args[:metags_count]
+      @today_metags_count = args[:today_metags_count]
+      @avatar = args[:avatar]
+      @is_followed = args[:followed]
+      @followers_count = args[:followers_count]
+      @following_count = args[:following_count]
+      @has_facebook = args[:has_facebook]
+      @has_twitter = args[:has_twitter]
     end
     
     class << self
