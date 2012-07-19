@@ -42,6 +42,33 @@ module Metwit
       end
             
     end
+
+    describe "::find" do
+      around do |example|
+        WebMock.disable_net_connect!
+        url = BASE_URL + '/metags/1234/'
+        WebMock.stub_http_request(:get, url)#.to_return(fixture("metags1234"))
+        example.run
+        WebMock.reset!
+        WebMock.allow_net_connect!
+      end
+
+      it "should return a Metag object" do
+        Metag.find("1234").should be_a Metag
+      end
+
+      it "should return a Metag with the id requested" do
+        id = "1234"
+        metag = Metag.find(id)
+        metag.id.should eq id
+      end
+
+      it "should have all the guaranteed fields" do
+      end
+      
+
+    end
+    
     
   end
 end

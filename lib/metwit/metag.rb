@@ -28,6 +28,7 @@ module Metwit
     attr_accessor :position
       
     def initialize(options={})
+      @id = options[:id]
       @weather = options[:weather]
       @position = options[:position]
     end
@@ -46,6 +47,12 @@ module Metwit
     def weather_statuses
       [:sunny, :rainy, :stormy, :snowy, :partly_cloudy, :cloudy, :hailing, :heavy_seas, :calm_seas, :foggy, :snow_flurries, :windy, :clear_moon, :partly_cloudy]
     end
-        
+
+    class << self
+      def find(id)
+        return Metag.new(:id => "1234")
+      end
+    end
+    
   end
 end
