@@ -24,7 +24,7 @@ module Metwit
       end
       
       it "should have all the guaranteed fields" do
-        user = User.find(6576)
+        user = User.find("6576")
         user.id.should_not be_nil
         user.nickname.should_not be_nil
         user.metags_count.should_not be_nil

@@ -64,11 +64,16 @@ module Metwit
       end
 
       it "should have all the guaranteed fields" do
+        metag = Metag.find("1234")
+        metag.id.should_not be_nil
+        metag.timestamp.should_not be_nil
+        metag.weather.should_not be_nil
+        metag.position.should_not be_nil
+        metag.user.should_not be_nil
+        metag.replies_count.should_not be_nil
+        metag.thanks_count.should_not be_nil
       end
-      
 
     end
-    
-    
   end
 end

@@ -26,12 +26,34 @@ module Metwit
     # The geo location of the metag with GeoJSON format
     # @return [GeoJSON] geo location of the metag
     attr_accessor :position
+
+    # Guaranteed.
+    # The issuer of the metag.
+    # @return [User] the issuer of the metag
+    attr_accessor :user
+
+    # Guaranteed.
+    # The number of replies
+    # @return [Fixnum] the number of replies
+    attr_accessor :replies_count
+
+    # Guaranteed
+    # The number of thanks
+    # @return [Fixnum] the number of thanks
+    attr_accessor :thanks_count
+    
       
-    def initialize(options={})
-      @id = options[:id]
-      @weather = options[:weather]
-      @position = options[:position]
+    def initialize(args={})
+      @id = args[:id]
+      @weather = args[:weather]
+      @position = args[:position]
+      @timestamp = args[:timestamp]
+      @weather = args[:weather]
+      @user = args[:user]
+      @replies_count = args[:replies_count]
+      @thanks_count = args[:thanks_count]
     end
+
     # This method validates the metag for the submission
     # @return [Boolean]
     def valid?
@@ -50,7 +72,7 @@ module Metwit
 
     class << self
       def find(id)
-        return Metag.new(:id => "1234")
+        return Metag.new(:id => "1234", :timestamp => Time.now, :weather => "chupa", :position => "12323", :user => User.new, :replies_count => 12, :thanks_count => 10)
       end
     end
     
