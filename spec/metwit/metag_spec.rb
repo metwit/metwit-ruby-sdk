@@ -47,7 +47,7 @@ module Metwit
       around do |example|
         WebMock.disable_net_connect!
         url = BASE_URL + '/metags/1234/'
-        WebMock.stub_http_request(:get, url)#.to_return(fixture("metags1234"))
+        WebMock.stub_http_request(:get, url).to_return(fixture("metag1234"))
         example.run
         WebMock.reset!
         WebMock.allow_net_connect!

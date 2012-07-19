@@ -89,7 +89,7 @@ module Metwit
     end
     
     class << self
-      # Return the user associate with the id
+      # Return the user associated with the id
       # @return [User]
       def find(id)
         response = get("/#{id}/")
@@ -100,7 +100,7 @@ module Metwit
       # Create a user from an HTTParty::Response
       # @return [User]
       def user_from_json(response)
-        options = {
+        args = {
           id: response['id'],
           nickname: response['nickname'],
           metags_count: response['reports_count'],
@@ -112,7 +112,7 @@ module Metwit
           has_facebook: response['has_facebook'],
           has_twitter: response['has_twitter'],
         }
-        User.new(options)
+        User.new(args)
       end
             
     end

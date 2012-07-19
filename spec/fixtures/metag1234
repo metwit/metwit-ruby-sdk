@@ -1,0 +1,9 @@
+HTTP/1.0 200 OK
+Date: Thu, 19 Jul 2012 20:00:13 GMT
+Server: WSGIServer/0.1 Python/2.7.1
+Vary: Accept-Language, Cookie
+Content-Type: application/json; charset=utf-8
+Content-Language: en-us
+Set-Cookie:  sessionid=223bcf639c1bf9a552a4745fdc8f1c2f; expires=Sun, 17-Jul-2022 20:00:13 GMT; Max-Age=315360000; Path=/
+
+{"country": "United States", "geo": {"coordinates": [-122.40641784667969, 37.78583526611328], "type": "Point"}, "icon": "http://api.metwit.me/v2/icons/sunny", "id": "1234", "locality": "San Francisco", "replies_count": 0, "resource_uri": "/v2/metags/1/", "thanks_count": 0, "timestamp": "2012-07-13T15:53:34.250591", "user": "3", "weather": {"status": "clear"}, "weight": -525998.758139}

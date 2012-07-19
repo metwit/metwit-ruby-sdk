@@ -1,10 +1,13 @@
 require 'rgeo'
+require 'httparty'
 
 module Metwit
 
   # Metags are the weather tags
   class Metag
-
+    include HTTParty
+    base_uri(BASE_URL+'/metags')
+    
     # Mandatory and guaranteed.  
     # Weather is an Hash with two keys: :status and :details  
     # Valid :status values are:  
@@ -71,9 +74,27 @@ module Metwit
     end
 
     class << self
+      # Return the metag associated with the id
+      # @return [Metag]
       def find(id)
-        return Metag.new(:id => "1234", :timestamp => Time.now, :weather => "chupa", :position => "12323", :user => User.new, :replies_count => 12, :thanks_count => 10)
+        response = get("/#{id}/")
+        raise "http error" unless response.code == 200
+        metag_from_json(response)
       end
+
+      def metag_from_json(response)
+        args = {
+          id: response['id'],
+          timestamp: response['timestamp'],
+          weather: response['weather'],
+          position: response['geo'],
+          user: response['user'],
+          replies_count: response['replies_count'],
+          thanks_count: response['thanks_count'],
+        }
+        Metag.new(args)
+      end
+      
     end
     
   end
