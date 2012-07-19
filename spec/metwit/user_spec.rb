@@ -14,10 +14,10 @@ module Metwit
       end
       
       it "should return a User object" do
-        User.find(6576).should be_a User
+        User.find("6576").should be_a User
       end
 
-      it "should return a User with the id searched" do
+      it "should return a User with the id requested" do
         id = "6576"
         user = User.find(id)
         user.id.should eq id
@@ -33,8 +33,8 @@ module Metwit
         user.followed?.should_not
         user.followers_count.should_not be_nil
         user.following_count.should_not be_nil
-        user.facebook?
-        user.twitter?
+        user.facebook?.should_not be_nil
+        user.twitter?.should_not be_nil
       end
       
     end
