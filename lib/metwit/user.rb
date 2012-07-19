@@ -1,4 +1,3 @@
-require 'uri'
 require 'httparty'
 
 module Metwit
@@ -98,8 +97,6 @@ module Metwit
         user_from_json(response)
       end
 
-      private
-      
       # Create a user from an HTTParty::Response
       # @return [User]
       def user_from_json(response)
@@ -108,8 +105,8 @@ module Metwit
           nickname: response['nickname'],
           metags_count: response['reports_count'],
           today_metags_count: response['todays_reports_count'],
-          avatar: response['avatar_url'],
-          followed: response['followed'],
+          avatar: URI.parse(response['avatar_url']),
+          followed: response['is_followed'],
           followers_count: response['followers_count'],
           following_count: response['following_count'],
           has_facebook: response['has_facebook'],

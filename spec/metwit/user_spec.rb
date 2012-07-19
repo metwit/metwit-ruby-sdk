@@ -1,21 +1,6 @@
 require 'spec_helper'
 module Metwit
   describe User do
-    def user
-      options = {
-        id: 3,
-        nickname: 'verginge',
-        metags_count: 100,
-        today_metags_count: 2,
-        avatar: URI('https://s3.salcazzo.amazon.com/di233hane'),
-        is_followed: false,
-        followers_count: 10,
-        following_count: 100,
-        has_facebook: true,
-        has_twitter: false,
-      }
-      @user ||= User.new(options)
-    end
 
     describe "::find" do
 
@@ -52,6 +37,67 @@ module Metwit
         user.twitter?
       end
       
+    end
+
+    describe "::user_from_json" do
+      around do |example|
+        WebMock.disable_net_connect!
+        url = BASE_URL + '/users/6576/'
+        WebMock.stub_http_request(:get, url).to_return(fixture("user6576"))
+        response = HTTParty.get(url)
+        user = User.user_from_json(response)
+        example.run
+        WebMock.reset!
+        WebMock.allow_net_connect!
+      end
+
+      def user
+        url = BASE_URL + '/users/6576/'
+        response = HTTParty.get(url)
+        User.user_from_json(response)
+      end
+
+      it "should return a user with String id" do
+        user.id.should be_a String
+      end
+
+      it "should return a user with String nickname" do
+        user.nickname.should be_a String
+      end
+
+      it "should return a user with Fixnum metags_count" do
+        user.metags_count.should be_a Fixnum
+      end
+
+      it "should return a user with Fixnum today_metags_count" do
+        user.today_metags_count.should be_a Fixnum
+      end
+
+      it "should return a user with URI avatar" do
+        user.avatar.should be_a URI
+      end
+
+      it "should return a user with Boolean followed" do
+        user.followed?.should be_boolean
+      end
+
+      it "should return a user with Fixnum followers_count" do
+        user.followers_count.should be_a Fixnum
+      end
+
+
+      it "should return a user with Fixnum following_count" do
+        user.following_count.should be_a Fixnum
+      end
+
+      it "should return a user with Boolean facebook" do
+        user.facebook?.should be_boolean
+      end
+
+      it "should return a user with Boolean twitter" do
+        user.twitter?.should be_boolean
+      end
+            
     end
     
   end

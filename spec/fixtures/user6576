@@ -6,4 +6,4 @@ Content-Type: application/json; charset=utf-8
 Content-Language: en-us
 Set-Cookie:  sessionid=acd2192c9f992cf424520af41bacab1b; expires=Sat, 16-Jul-2022 20:18:03 GMT; Max-Age=315360000; Path=/
 
-{"activities": [], "avatar_url": "https://s3-eu-west-1.amazonaws.com/nuvola-static-eu/avatar/avatar.jpeg", "favorite_weather": "sunny", "followers_count": 0, "following_count": 0, "gender": "N", "has_facebook": false, "has_twitter": false, "id": "6576", "nickname": "davider", "reports_count": 0, "resource_uri": "/v2/users/6576/", "todays_reports_count": 3, "username": "davider"}
+{"activities": [], "avatar_url": "https://s3-eu-west-1.amazonaws.com/nuvola-static-eu/avatar/avatar.jpeg", "favorite_weather": "sunny", "followers_count": 0, "following_count": 0, "gender": "N", "has_facebook": false, "has_twitter": false, "id": "6576", "nickname": "davider", "reports_count": 0, "resource_uri": "/v2/users/6576/", "todays_reports_count": 3, "username": "davider", "is_followed": false}
