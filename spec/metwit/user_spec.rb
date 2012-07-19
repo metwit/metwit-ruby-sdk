@@ -18,6 +18,15 @@ module Metwit
     end
 
     describe "::find" do
+
+      around do |example|
+        WebMock.disable_net_connect!
+        url = BASE_URL + '/users/6576/'
+        WebMock.stub_http_request(:get, url).to_return(fixture("user6576"))
+        example.run
+        WebMock.reset!
+        WebMock.allow_net_connect!
+      end
       
       it "should return a User object" do
         User.find(6576).should be_a User
