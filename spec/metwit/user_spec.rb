@@ -39,7 +39,7 @@ module Metwit
       
     end
 
-    describe "::user_from_json" do
+    describe "::from_json" do
       around do |example|
         WebMock.disable_net_connect!
         url = BASE_URL + '/users/6576/'
@@ -52,7 +52,7 @@ module Metwit
       def user
         url = BASE_URL + '/users/6576/'
         response = HTTParty.get(url)
-        User.user_from_json(response)
+        User.from_json(response)
       end
 
       it "should return a user with String id" do

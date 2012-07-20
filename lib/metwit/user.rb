@@ -94,12 +94,12 @@ module Metwit
       def find(id)
         response = get("/#{id}/")
         raise "http error" unless response.code == 200
-        user_from_json(response)
+        self.from_json(response)
       end
 
       # Create a user from an HTTParty::Response
       # @return [User]
-      def user_from_json(response)
+      def from_json(response)
         args = {
           id: response['id'],
           nickname: response['nickname'],

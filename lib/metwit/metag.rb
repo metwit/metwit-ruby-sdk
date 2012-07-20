@@ -96,18 +96,18 @@ module Metwit
       def find(id)
         response = get("/#{id}/")
         raise "http error" unless response.code == 200
-        metag_from_json(response)
+        self.from_json(response)
       end
 
       # Return a metag form a JSON response
       # @return [User]
-      def metag_from_json(response)
+      def from_json(response)
         args = {
           id: response['id'],
           timestamp: Time.parse(response['timestamp']),
           weather: {status: response['weather']['status'].gsub(/ /, '_').to_sym},
           position: RGeo::GeoJSON.decode(response['geo']),
-          user: User.user_from_json(response['user']),
+          user: User.from_json(response['user']),
           replies_count: response['replies_count'],
           thanks_count: response['thanks_count'],
         }

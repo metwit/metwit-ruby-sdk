@@ -104,7 +104,7 @@ module Metwit
 
     end
 
-    describe "::metag_from_json" do
+    describe "::from_json" do
       around do |example|
         WebMock.disable_net_connect!
         url = BASE_URL + '/metags/1234/'
@@ -117,7 +117,7 @@ module Metwit
       def metag
         url = BASE_URL + '/metags/1234/'
         response = HTTParty.get(url)
-        Metag.metag_from_json(response)
+        Metag.from_json(response)
       end
 
       it "should return a metag with String id" do
