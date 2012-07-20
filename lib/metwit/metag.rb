@@ -1,4 +1,5 @@
 require 'rgeo'
+require 'rgeo-geojson'
 require 'httparty'
 
 module Metwit
@@ -27,7 +28,7 @@ module Metwit
 
     # Mandatory and guaranteed.
     # The geo location of the metag with GeoJSON format
-    # @return [GeoJSON] geo location of the metag
+    # @return [RGeo::Feature::Point] geo location of the metag
     attr_accessor :position
 
     # Guaranteed.
@@ -82,13 +83,15 @@ module Metwit
         metag_from_json(response)
       end
 
+      # Return a metag form a JSON response
+      # @return [User]
       def metag_from_json(response)
         args = {
           id: response['id'],
-          timestamp: response['timestamp'],
-          weather: response['weather'],
-          position: response['geo'],
-          user: response['user'],
+          timestamp: Time.parse(response['timestamp']),
+          weather: {status: response['weather']['status']},
+          position: RGeo::GeoJSON.decode(response['geo']),
+          user: User.user_from_json(response['user']),
           replies_count: response['replies_count'],
           thanks_count: response['thanks_count'],
         }

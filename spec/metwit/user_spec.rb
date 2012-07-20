@@ -44,8 +44,6 @@ module Metwit
         WebMock.disable_net_connect!
         url = BASE_URL + '/users/6576/'
         WebMock.stub_http_request(:get, url).to_return(fixture("user6576"))
-        response = HTTParty.get(url)
-        user = User.user_from_json(response)
         example.run
         WebMock.reset!
         WebMock.allow_net_connect!

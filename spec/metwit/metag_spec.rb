@@ -75,5 +75,52 @@ module Metwit
       end
 
     end
+
+    describe "::metag_from_json" do
+      around do |example|
+        WebMock.disable_net_connect!
+        url = BASE_URL + '/metags/1234/'
+        WebMock.stub_http_request(:get, url).to_return(fixture("metag1234"))
+        example.run
+        WebMock.reset!
+        WebMock.allow_net_connect!
+      end
+
+      def metag
+        url = BASE_URL + '/metags/1234/'
+        response = HTTParty.get(url)
+        Metag.metag_from_json(response)
+      end
+
+      it "should return a metag with String id" do
+        metag.id.should be_a String
+      end
+
+      it "should return a metag with Time timestamp" do
+        metag.timestamp.should be_a Time
+      end
+
+      it "should return a metag with RGeo::Feature::Point position" do
+        RGeo::Feature::Point.check_type(metag.position).should be_true
+      end
+      
+      it "should return a metag with valid weather" do
+        metag.weather[:status].should_not be_nil
+      end
+
+      it "should return a metag with User user" do
+        metag.user.should be_a User
+      end
+
+      it "should return a metag with Fixnum replies_count" do
+        metag.replies_count.should be_a Fixnum
+      end
+
+      it "should return a metag with Fixnum thanks_count" do
+        metag.thanks_count.should be_a Fixnum
+      end
+
+    end
+    
   end
 end
