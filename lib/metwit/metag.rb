@@ -61,17 +61,33 @@ module Metwit
     # This method validates the metag for the submission
     # @return [Boolean]
     def valid?
+      return false unless weather_valid?
+      return false unless position_valid?
+      true
+    end
+
+    # This method check if the weathear is valid
+    # @return [Boolean]
+    def weather_valid?
+      return false if @weather.nil?
       return false if @weather[:status].nil?
       return false unless weather_statuses.include?(@weather[:status])
+      true
+    end
+
+    # This method check if the position is valid
+    # @return [Boolean]
+    def position_valid?
       return false if @position.nil?
       return false unless RGeo::Feature::Point.check_type(@position)
       true
     end
-
+    
+    
     # This method return all the reognized weather statuses
     # @return [Array<Symbol>]
     def weather_statuses
-      [:sunny, :rainy, :stormy, :snowy, :partly_cloudy, :cloudy, :hailing, :heavy_seas, :calm_seas, :foggy, :snow_flurries, :windy, :clear_moon, :partly_cloudy]
+      [:clear, :rainy, :stormy, :snowy, :partly_cloudy, :cloudy, :hailing, :heavy_seas, :calm_seas, :foggy, :snow_flurries, :windy, :partly_cloudy]
     end
 
     class << self
@@ -89,7 +105,7 @@ module Metwit
         args = {
           id: response['id'],
           timestamp: Time.parse(response['timestamp']),
-          weather: {status: response['weather']['status']},
+          weather: {status: response['weather']['status'].gsub(/ /, '_').to_sym},
           position: RGeo::GeoJSON.decode(response['geo']),
           user: User.user_from_json(response['user']),
           replies_count: response['replies_count'],

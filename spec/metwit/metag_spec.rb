@@ -5,43 +5,71 @@ module Metwit
       factory = RGeo::Cartesian.factory
       
       options = {
-        :weather => {:status => :sunny},
+        :weather => {:status => :clear},
         :position => factory.point(1,2),
       }
       @metag ||= Metag.new(options)
     end
 
-    context "valid metag" do
-      it "should have a weather status != nil" do
-        metag.should be_valid
+    describe "#weather_valid?" do
+      it "should return false when weather is nil" do
+        metag.weather = nil
+        metag.weather_valid?.should_not be_true
+      end
+
+      it "should return false when weather[:status] is nil" do
         metag.weather[:status] = nil
-        metag.should_not be_valid
+        metag.weather_valid?.should_not be_true
       end
 
-      it "should have a recognized weather status" do
-        metag.should be_valid
+      it "should return false with an unrecogonized weather status" do
         metag.weather[:status] = :vola_tutto
+        metag.weather_valid?.should_not be_true
+      end
+
+      it "should return true with a recognized weather status" do
+        metag.weather_valid?.should be_true
+      end
+
+      it "should return false when weather[:status] is not a symbol" do
+        metag.weather[:status] = 'sunny'
+        metag.weather_valid?.should_not be_true
+      end
+      
+      
+    end
+
+    describe "#position_valid?" do
+      it "should return false when position is nil" do
+        metag.position = nil
+        metag.position_valid?.should_not be_true
+      end
+
+      it "should return false when position is not a geographical point" do
+        gis = RGeo::Cartesian.factory
+        metag.position = gis.line(gis.point(1,2), gis.point(2,1))
+        metag.position_valid?.should_not be_true
+      end
+
+      it "should return true when position is a Point" do
+        metag.position_valid?.should be_true
+      end
+      
+
+    end
+
+    describe "#valid?" do
+      it "should return true with a valid metag" do
+        metag.should be_valid
+      end
+
+      it "should return false with an invalid metag" do
+        metag.position = nil
         metag.should_not be_valid
       end
 
-      describe "#position" do
-        it "should be != nil" do
-          metag.should be_valid
-          metag.position = nil
-          metag.should_not be_valid
-        end
-
-        it "should be a geographical point" do
-          metag.should be_valid
-          gis = RGeo::Cartesian.factory
-          metag.position = gis.line(gis.point(1,2), gis.point(2,1))
-          metag.should_not be_valid
-        end
-
-        
-      end
-            
     end
+    
 
     describe "::find" do
       around do |example|
@@ -101,11 +129,11 @@ module Metwit
       end
 
       it "should return a metag with RGeo::Feature::Point position" do
-        RGeo::Feature::Point.check_type(metag.position).should be_true
+        metag.position_valid?.should be_true
       end
       
       it "should return a metag with valid weather" do
-        metag.weather[:status].should_not be_nil
+        metag.weather_valid?.should be_true
       end
 
       it "should return a metag with User user" do
