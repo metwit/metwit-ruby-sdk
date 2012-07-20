@@ -1,6 +1,7 @@
 require 'rgeo'
 require 'rgeo-geojson'
 require 'httparty'
+require 'json'
 
 module Metwit
 
@@ -90,6 +91,19 @@ module Metwit
       [:clear, :rainy, :stormy, :snowy, :partly_cloudy, :cloudy, :hailing, :heavy_seas, :calm_seas, :foggy, :snow_flurries, :windy, :partly_cloudy]
     end
 
+    # This method encode metag in json for submission
+    # @return [String]
+    def to_json
+      raise "metag in invalid" unless valid?
+      
+      {
+        weather: {
+          status: self.weather[:status].to_s.gsub(/_/,' '),
+        },
+        geo: RGeo::GeoJSON.encode(self.position),
+      }.to_json
+    end
+    
     class << self
       # Return the metag associated with the id
       # @return [Metag]

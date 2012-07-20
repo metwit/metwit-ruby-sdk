@@ -104,6 +104,22 @@ module Metwit
 
     end
 
+    describe "#to_json" do
+      it "should encode GeoJSON correctly" do
+        json_metag = JSON.parse(metag.to_json)
+        new_metag = Metag.new(:position => RGeo::GeoJSON.decode(json_metag['geo']))
+        new_metag.position_valid?.should be_true
+      end
+
+      it "should encode weather status correctly" do
+        json_metag = JSON.parse(metag.to_json)
+        new_metag = Metag.new(:weather => {:status => json_metag['weather']['status'].gsub(/ /, '_').to_sym})
+        new_metag.weather_valid?.should be_true
+      end
+      
+    end
+
+
     describe "::from_json" do
       around do |example|
         WebMock.disable_net_connect!
@@ -149,6 +165,5 @@ module Metwit
       end
 
     end
-    
   end
 end
