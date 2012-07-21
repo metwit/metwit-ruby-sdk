@@ -18,7 +18,30 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# First require the gem
+require 'metwit'
+
+
+## How to post a Metag
+# If you don't authenticate you may not be able to post metags
+Metwit.authenticate("username", "password")
+# You need a rgeo factory to project the point coordinate
+factory = RGeo::Cartesian.factory
+# Then you can create a basic metag
+metag = Metwit::Metag.new(
+      :weather => {:status => :clear},
+      :position => factory.point(45.4, 9.1)
+)
+# Then post it to the server
+metag.create!
+
+## How to get a user by id
+user = Metwit::User.find('id')
+
+## How to get a metag by id
+metag = Metwit::Metag.find('id')
+```
 
 ## Contributing
 
