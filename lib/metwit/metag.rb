@@ -122,7 +122,7 @@ module Metwit
       end
 
       # Return metags in a geographical region
-      # return [Array<Metag>]
+      # @return [Array<Metag>]
       def in_rect(lat_n, lng_w, lat_s, lng_e)
         response = get('/', authenticated(:query => {:rect => "#{lat_n},#{lng_w},#{lat_s},#{lng_e}"}))
         raise "in_rect error" unless response.code == 200
@@ -132,7 +132,19 @@ module Metwit
         end
         metags
       end
-      
+
+      # Return last metags posted
+      # @return [Array<Metag>]
+      def feed
+        response = get('/', authenticated({}))
+        raise "feed error" unless response.code == 200
+        metags = []
+        response['objects'].each do |metag_json|
+          metags << self.from_json(metag_json)
+        end
+        metags
+      end
+            
       # Return a metag form a JSON response
       # @return [User]
       def from_json(response)
