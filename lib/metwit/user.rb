@@ -116,7 +116,6 @@ module Metwit
         User.new(args)
       end
 
-      private
       # Default HTTParty options
       # @return [Hash]
       def authenticated(opts)
@@ -124,7 +123,6 @@ module Metwit
       end
     end
 
-    private
     # HTTParty options for authenticaded calls
     # @return [Hash]
     def authenticated(opts)
