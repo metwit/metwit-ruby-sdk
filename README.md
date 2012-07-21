@@ -22,11 +22,10 @@ Or install it yourself as:
 # First require the gem
 require 'metwit'
 
-
 ## How to post a Metag
 # If you don't authenticate you may not be able to post metags
 Metwit.authenticate("username", "password")
-# You need a rgeo factory to project the point coordinate
+# You need a rgeo factory to project the point coordinates
 factory = RGeo::Cartesian.factory
 # Then you can create a basic metag
 metag = Metwit::Metag.new(
@@ -41,6 +40,9 @@ user = Metwit::User.find('id')
 
 ## How to get a metag by id
 metag = Metwit::Metag.find('id')
+
+## How to get metags in a geographical region
+metags = Metwit::Metag.in_rect(45.4, 9.1, 45.3, 9.0)
 ```
 
 ## Contributing
