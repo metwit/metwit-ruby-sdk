@@ -119,7 +119,12 @@ module Metwit
       
     end
 
+    describe "#create!" do
+    end
 
+    describe "::in_rect" do
+    end
+    
     describe "::from_json" do
       around do |example|
         WebMock.disable_net_connect!

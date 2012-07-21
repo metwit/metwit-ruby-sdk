@@ -6,7 +6,8 @@ module Metwit
   class User
     include HTTParty
     base_uri(BASE_URL+'/users')
-
+    headers 'Authorization' => "Bearer #{Metwit.bearer_token}"
+    
     # Guaranteed.
     # The user id
     # @return [String] unique identifier of the user

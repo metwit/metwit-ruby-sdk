@@ -9,7 +9,8 @@ module Metwit
   class Metag
     include HTTParty
     base_uri(BASE_URL+'/metags')
-    
+    headers 'Authorization' => "Bearer #{Metwit.bearer_token}"
+
     # Mandatory and guaranteed.  
     # Weather is an Hash with two keys: :status and :details  
     # Valid :status values are:  
@@ -103,7 +104,15 @@ module Metwit
         geo: RGeo::GeoJSON.encode(self.position),
       }.to_json
     end
-    
+
+    # This metod POST a metag
+    def create!
+      raise "invalid metag" unless self.valid?
+      response = self.class.post('/', :body => self.to_json, :headers => {'Cookie' => Metwit.cookie, 'Content-Type' => 'application/json' })
+      raise "post failed" unless response.code == 201
+      response
+    end
+        
     class << self
       # Return the metag associated with the id
       # @return [Metag]
@@ -113,6 +122,17 @@ module Metwit
         self.from_json(response)
       end
 
+      # Return metags in a geographical region
+      # return [Array<Metag>]
+      def in_rect(lat_n, lng_w, lat_s, lng_e)
+        response = get('/', :query => {:rect => "#{lat_n},#{lng_w},#{lat_s},#{lng_e}"})
+        metags = []
+        response['objects'].each do |metag_json|
+          metags << self.from_json(metag_json)
+        end
+        metags
+      end
+      
       # Return a metag form a JSON response
       # @return [User]
       def from_json(response)
