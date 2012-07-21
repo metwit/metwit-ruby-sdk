@@ -9,7 +9,6 @@ module Metwit
   class Metag
     include HTTParty
     base_uri(BASE_URL+'/metags')
-    headers 'Authorization' => "Bearer #{Metwit.bearer_token}"
 
     # Mandatory and guaranteed.  
     # Weather is an Hash with two keys: :status and :details  
@@ -108,7 +107,7 @@ module Metwit
     # This metod POST a metag
     def create!
       raise "invalid metag" unless self.valid?
-      response = self.class.post('/', :body => self.to_json, :headers => {'Cookie' => Metwit.cookie, 'Content-Type' => 'application/json' })
+      response = self.class.post('/', authenticated(:body => self.to_json, :headers => {'Content-Type' => 'application/json'}))
       raise "post failed" unless response.code == 201
       response
     end
@@ -117,7 +116,7 @@ module Metwit
       # Return the metag associated with the id
       # @return [Metag]
       def find(id)
-        response = get("/#{id}/")
+        response = get("/#{id}/", authenticated({}))
         raise "http error" unless response.code == 200
         self.from_json(response)
       end
@@ -125,7 +124,8 @@ module Metwit
       # Return metags in a geographical region
       # return [Array<Metag>]
       def in_rect(lat_n, lng_w, lat_s, lng_e)
-        response = get('/', :query => {:rect => "#{lat_n},#{lng_w},#{lat_s},#{lng_e}"})
+        response = get('/', authenticated(:query => {:rect => "#{lat_n},#{lng_w},#{lat_s},#{lng_e}"}))
+        raise "in_rect error" unless response.code == 200
         metags = []
         response['objects'].each do |metag_json|
           metags << self.from_json(metag_json)
@@ -147,7 +147,21 @@ module Metwit
         }
         Metag.new(args)
       end
-      
+
+      private
+      # Default HTTParty options
+      # @return [Hash]
+      def authenticated(opts)
+        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
+      end
+    
+    end
+
+    private
+    # HTTParty options for authenticaded calls
+    # @return [Hash]
+    def authenticated(opts)
+      self.class.authenticated(opts)
     end
     
   end

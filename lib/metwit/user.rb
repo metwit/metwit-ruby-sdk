@@ -93,7 +93,7 @@ module Metwit
       # Return the user associated with the id
       # @return [User]
       def find(id)
-        response = get("/#{id}/")
+        response = get("/#{id}/", authenticated({}))
         raise "http error" unless response.code == 200
         self.from_json(response)
       end
@@ -115,8 +115,21 @@ module Metwit
         }
         User.new(args)
       end
-            
+
+      private
+      # Default HTTParty options
+      # @return [Hash]
+      def authenticated(opts)
+        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
+      end
     end
-      
+
+    private
+    # HTTParty options for authenticaded calls
+    # @return [Hash]
+    def authenticated(opts)
+      self.class.authenticated(opts)
+    end
+
   end
 end

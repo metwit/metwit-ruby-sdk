@@ -16,4 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = Metwit::VERSION
   gem.add_dependency('httparty')
   gem.add_dependency('rgeo-geojson')
+  gem.add_dependency('activesupport')
 end
