@@ -46,6 +46,9 @@ metag = Metwit::Metag.find('id')
 
 ## How to get metags in a geographical region
 metags = Metwit::Metag.in_rect(45.4, 9.1, 45.3, 9.0)
+
+## How to get last metags
+metags = Metwit::Metag.feed
 ```
 
 ## Contributing
