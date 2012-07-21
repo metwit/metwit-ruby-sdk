@@ -22,8 +22,11 @@ Or install it yourself as:
 # First require the gem
 require 'metwit'
 
+# Set your api key
+Metwit.api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
 ## How to post a Metag
-# If you don't authenticate you may not be able to post metags
+# If you don't authenticate a user you may not be able to post metags
 Metwit.authenticate("username", "password")
 # You need a rgeo factory to project the point coordinates
 factory = RGeo::Cartesian.factory
