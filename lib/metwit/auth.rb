@@ -18,7 +18,7 @@ module Metwit
       @logged = false
       url = BASE_URL + '/auth/'
 
-      response = HTTParty.post(url, :body => {:username=>username, :password=>password}, :headers => {'Authorization' => "Bearer #{@api_key}"})
+      response = HTTParty.post(url, :body => {:username=>username, :password=>password}.to_json, :headers => {'Authorization' => "Bearer #{@api_key}"})
       @access_token = response['bearer_token']
       @logged = true if response.code == 200
       response
