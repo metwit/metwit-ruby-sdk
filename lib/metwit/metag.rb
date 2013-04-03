@@ -10,9 +10,9 @@ module Metwit
     include HTTParty
     base_uri(BASE_URL+'/metags')
 
-    # Mandatory and guaranteed.  
-    # Weather is an Hash with two keys: :status and :details  
-    # Valid :status values are:  
+    # Mandatory and guaranteed.
+    # Weather is an Hash with two keys: :status and :details
+    # Valid :status values are:
     # :clear, :rainy, :stormy, :snowy, :partly\_cloudy, :cloudy, :hailing, :heavy\_seas, :calm\_seas, :foggy, :snow\_flurries, :windy, :partly\_cloudy, :uknown
     # @return [{Symbol => String, Hash}] weather data
     attr_accessor :weather
@@ -46,8 +46,8 @@ module Metwit
     # The number of thanks
     # @return [Fixnum] the number of thanks
     attr_accessor :thanks_count
-    
-      
+
+
     def initialize(args={})
       @id = args[:id]
       @weather = args[:weather]
@@ -83,8 +83,8 @@ module Metwit
       return false unless RGeo::Feature::Point.check_type(@position)
       true
     end
-    
-    
+
+
     # This method return all the reognized weather statuses
     # @return [Array<Symbol>]
     def weather_statuses
@@ -95,7 +95,7 @@ module Metwit
     # @return [String]
     def to_json
       raise "metag in invalid" unless valid?
-      
+
       {
         weather: {
           status: self.weather[:status].to_s.gsub(/_/,' '),
@@ -111,7 +111,7 @@ module Metwit
       raise "post failed" unless response.code == 201
       response
     end
-        
+
     class << self
       # Return the metag associated with the id
       # @return [Metag]
@@ -144,7 +144,7 @@ module Metwit
         end
         metags
       end
-            
+
       # Return a metag form a JSON response
       # @return [User]
       def from_json(response)
@@ -165,7 +165,7 @@ module Metwit
       def authenticated(opts)
         opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
       end
-    
+
     end
 
     # HTTParty options for authenticaded calls
@@ -173,6 +173,6 @@ module Metwit
     def authenticated(opts)
       self.class.authenticated(opts)
     end
-    
+
   end
 end
