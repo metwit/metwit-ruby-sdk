@@ -163,7 +163,7 @@ module Metwit
       # Default HTTParty options
       # @return [Hash]
       def authenticated(opts)
-        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
+#        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
       end
 
     end

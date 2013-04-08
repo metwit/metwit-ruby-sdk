@@ -47,9 +47,13 @@ module Metwit
 
       # An array with current weather and weather forecast
       def in_location(lat, lng)
-        response = get("/?location_lat=#{lat}&location_lng=#{lng}")
+        response = get("/?location_lat=#{lat}&location_lng=#{lng}", authenticated({}))
+        raise AccessTokenExpiredError if response.code == 401
         raise "api error" unless response.code == 200
         response['objects'].map {|weather_json| self.from_json(weather_json)}
+      rescue AccessTokenExpiredError => e
+        Metwit.refresh_access_token
+        in_location(lat, lng)
       end
 
       def from_json(response)
@@ -59,6 +63,10 @@ module Metwit
                  sun_altitude: response['sun_altitude'],
                  sources: response['sources'],
                  location: response['location'])
+      end
+
+      def authenticated(opts)
+        opts.deep_merge(:headers => {'Authorization' => "Basic #{Metwit.access_token}"}) if Metwit.logged?
       end
     end
   end

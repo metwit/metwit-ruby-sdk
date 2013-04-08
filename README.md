@@ -22,34 +22,12 @@ Or install it yourself as:
 # First require the gem
 require 'metwit'
 
-# Set your api key
-Metwit.api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# Set your client_id and client secret. See http://metwit.com/developers
+Metwit.client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+Metwit.client_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-## How to post a Metag
-# If you don't authenticate a user you may not be able to post metags
-Metwit.authenticate("username", "password")
-# You need a rgeo factory to project the point coordinates
-factory = RGeo::Cartesian.factory
-# Then you can create a basic metag
-metag = Metwit::Metag.new(
-      :weather => {:status => :clear},
-      :position => factory.point(45.4, 9.1)
-)
-# Then post it to the server
-metag.create!
-
-## How to get a user by id
-user = Metwit::User.find('id')
-
-## How to get a metag by id
-metag = Metwit::Metag.find('id')
-
-## How to get metags in a geographical region
-metags = Metwit::Metag.in_rect(45.4, 9.1, 45.3, 9.0)
-
-## How to get last metags
-metags = Metwit::Metag.feed
-```
+# To retrieve the current weather status and forecasts for a geographical point
+Metwit::Weather.in_location(latitude, longitude)
 
 ## Contributing
 

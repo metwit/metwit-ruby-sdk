@@ -6,8 +6,8 @@ module Metwit
   class User
     include HTTParty
     base_uri(BASE_URL+'/users')
-    headers 'Authorization' => "Bearer #{Metwit.bearer_token}"
-    
+#    headers 'Authorization' => "Bearer #{Metwit.bearer_token}"
+
     # Guaranteed.
     # The user id
     # @return [String] unique identifier of the user
@@ -88,7 +88,7 @@ module Metwit
       @has_facebook = args[:has_facebook]
       @has_twitter = args[:has_twitter]
     end
-    
+
     class << self
       # Return the user associated with the id
       # @return [User]
@@ -119,7 +119,7 @@ module Metwit
       # Default HTTParty options
       # @return [Hash]
       def authenticated(opts)
-        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
+        #        opts.deep_merge(:headers => {'Authorization' => "Bearer #{Metwit.bearer_token}"})
       end
     end
 
