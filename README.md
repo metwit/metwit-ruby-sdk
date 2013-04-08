@@ -25,6 +25,7 @@ require 'metwit'
 # Set your client_id and client secret. See http://metwit.com/developers
 Metwit.client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 Metwit.client_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+Metwit.get_access_token
 
 # To retrieve the current weather status and forecasts for a geographical point
 Metwit::Weather.in_location(latitude, longitude)
